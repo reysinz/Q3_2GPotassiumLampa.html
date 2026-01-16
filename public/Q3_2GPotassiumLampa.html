@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Form</title>
+<link rel="stylesheet" href="style.css">
+
+
+
+<script>
+    function confirmSubmit() {
+        return confirm("Are you sure you want to submit this form?");
+    }
+
+    function confirmReset() {
+        return confirm("Are you sure you want to reset the form?");
+    }
+
+    function checkEmpty(el) {
+        if (el.value.trim() === "") {
+            el.classList.add("invalid");
+        } else {
+            el.classList.remove("invalid");
+        }
+    }
+</script>
+</head>
+
+<body>
+
+<form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+
+    <label>
+        Student ID
+        <input type="number" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Full Name
+        <input type="text" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Birthday
+        <input type="date" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Email Address
+        <input type="email" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Mobile Phone
+        <input type="text" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Grade Level
+        <select required onblur="checkEmpty(this)">
+            <option value="">--Select--</option>
+            <option value="g7">Junior</option>
+            <option value="g8">Sophomore</option>
+            <option value="g9">Senior</option>
+            <option value="g10">Graduate</option>
+        </select>
+    </label>
+
+    <label>
+        Intern / Extern
+        <input type="radio" name="role" value="intern" required> Internal
+        <input type="radio" name="role" value="extern"> External
+    </label>
+
+    <label>
+        Preferred Organization / Club
+        <select required onblur="checkEmpty(this)">
+            <option value="">--Select--</option>
+            <option value="tech">Tech Guild</option>
+            <option value="media">Media Core</option>
+            <option value="sports">Sports Circle</option>
+            <option value="arts">Creative Arts</option>
+            <option value="service">Community Service</option>
+        </select>
+    </label>
+
+    <label>
+        Why do you want to join
+        <textarea rows="4" required onblur="checkEmpty(this)"></textarea>
+    </label>
+
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+
+</form>
+
+</body>
+</html>
