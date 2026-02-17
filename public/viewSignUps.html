@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>View Signups</title>
+
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Student Club Signups</h2>
+
+Filter by Club:
+<select id="clubFilter" onchange="displaySignups()">
+    <option value="all">All</option>
+    <option value="Sports">Alianti</option>
+    <option value="Literature">Ellipsis</option>
+    <option value="Movies">Celluloid</option>
+    <option value="Debate">Invictus</option>
+    <option value="Religion">Acts</option>
+</select>
+
+<p>Total Signups: <span id="totalCount">0</span></p>
+
+<table>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Birthday</th>
+    <th>Email</th>
+    <th>Mobile</th>
+    <th>Grade</th>
+    <th>Role</th>
+    <th>Club</th>
+    <th>Reason</th>
+</tr>
+</thead>
+
+<tbody id="signupTable"></tbody>
+</table>
+
+<br>
+<button onclick="location.href='index.html'">Back to Form</button>
+
+<script>
+function displaySignups() {
+    const table = document.getElementById("signupTable");
+    const total = document.getElementById("totalCount");
+    const filter = document.getElementById("clubFilter").value;
+
+    const signups = JSON.parse(localStorage.getItem("signups")) || [];
+
+    table.innerHTML = "";
+
+    let filtered = signups;
+
+    if (filter !== "all") {
+        filtered = signups.filter(s => s.club === filter);
+    }
+
+    filtered.forEach(s => {
+        const row = `
+        <tr>
+            <td>${s.studentID}</td>
+            <td>${s.fullName}</td>
+            <td>${s.birthday}</td>
+            <td>${s.email}</td>
+            <td>${s.mobile}</td>
+            <td>${s.grade}</td>
+            <td>${s.role}</td>
+            <td>${s.club}</td>
+            <td>${s.reason}</td>
+        </tr>
+        `;
+        table.innerHTML += row;
+    });
+
+    total.textContent = filtered.length;
+}
+
+// load all on start
+displaySignups();
+</script>
+
+</body>
+</html>

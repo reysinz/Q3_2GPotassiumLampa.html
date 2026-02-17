@@ -8,43 +8,48 @@
 
 
 <script>
-    function confirmSubmit() {
-        if (!confirm("Are you sure you want to submit this form?")) {
-            return false;
-        }
-
-        
-        const data = {
-            studentID: document.querySelector('input[type="number"]').value,
-            fullName: document.querySelector('input[type="text"]').value,
-            birthday: document.querySelector('input[type="date"]').value,
-            email: document.querySelector('input[type="email"]').value,
-            mobile: document.querySelectorAll('input[type="text"]')[1].value,
-            grade: document.querySelectorAll('select')[0].value,
-            role: document.querySelector('input[name="role"]:checked')?.value || "",
-            club: document.querySelectorAll('select')[1].value,
-            reason: document.querySelector('textarea').value
-        };
-
-       
-        localStorage.setItem("studentFormData", JSON.stringify(data));
-
-        alert("Form data saved to localStorage!");
-
-        return false; // prevents page reloa
+   function confirmSubmit() {
+    if (!confirm("Are you sure you want to submit this form?")) {
+        return false;
     }
 
-    function confirmReset() {
-        return confirm("Are you sure you want to reset the form?");
-    }
+    // create signup object
+    const signup = {
+        studentID: document.querySelector('input[type="number"]').value,
+        fullName: document.querySelectorAll('input[type="text"]')[0].value,
+        birthday: document.querySelector('input[type="date"]').value,
+        email: document.querySelector('input[type="email"]').value,
+        mobile: document.querySelectorAll('input[type="text"]')[1].value,
+        grade: document.querySelectorAll('select')[0].value,
+        role: document.querySelector('input[name="role"]:checked')?.value || "",
+        club: document.querySelectorAll('select')[1].value,
+        reason: document.querySelector('textarea').value
+    };
 
-    function checkEmpty(el) {
-        if (el.value.trim() === "") {
-            el.classList.add("invalid");
-        } else {
-            el.classList.remove("invalid");
-        }
+    // get existing data OR initialize empty arra
+    let signups = JSON.parse(localStorage.getItem("signups")) || [];
+
+    
+    signups.push(signup);
+
+   
+    localStorage.setItem("signups", JSON.stringify(signups));
+
+    alert("Signup saved!");
+    return false;
+}
+
+function confirmReset() {
+    return confirm("Are you sure you want to reset the form?");
+}
+
+function checkEmpty(el) {
+    if (el.value.trim() === "") {
+        el.classList.add("invalid");
+    } else {
+        el.classList.remove("invalid");
     }
+}
 </script>
 </head>
 
