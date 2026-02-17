@@ -9,7 +9,29 @@
 
 <script>
     function confirmSubmit() {
-        return confirm("Are you sure you want to submit this form?");
+        if (!confirm("Are you sure you want to submit this form?")) {
+            return false;
+        }
+
+        
+        const data = {
+            studentID: document.querySelector('input[type="number"]').value,
+            fullName: document.querySelector('input[type="text"]').value,
+            birthday: document.querySelector('input[type="date"]').value,
+            email: document.querySelector('input[type="email"]').value,
+            mobile: document.querySelectorAll('input[type="text"]')[1].value,
+            grade: document.querySelectorAll('select')[0].value,
+            role: document.querySelector('input[name="role"]:checked')?.value || "",
+            club: document.querySelectorAll('select')[1].value,
+            reason: document.querySelector('textarea').value
+        };
+
+       
+        localStorage.setItem("studentFormData", JSON.stringify(data));
+
+        alert("Form data saved to localStorage!");
+
+        return false; // prevents page reloa
     }
 
     function confirmReset() {
