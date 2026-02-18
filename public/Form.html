@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Form</title>
+<link rel="stylesheet" href="style.css">
+
+
+
+<script>
+   function confirmSubmit() {
+    if (!confirm("Are you sure you want to submit this form?")) {
+        return false;
+    }
+
+    // create signup object
+    const signup = {
+        studentID: document.querySelector('input[type="number"]').value,
+        fullName: document.querySelectorAll('input[type="text"]')[0].value,
+        birthday: document.querySelector('input[type="date"]').value,
+        email: document.querySelector('input[type="email"]').value,
+        mobile: document.querySelectorAll('input[type="text"]')[1].value,
+        grade: document.querySelectorAll('select')[0].value,
+        role: document.querySelector('input[name="role"]:checked')?.value || "",
+        club: document.querySelectorAll('select')[1].value,
+        reason: document.querySelector('textarea').value
+    };
+
+    // get existing data OR initialize empty arra
+    let signups = JSON.parse(localStorage.getItem("signups")) || [];
+
+    
+    signups.push(signup);
+
+   
+    localStorage.setItem("signups", JSON.stringify(signups));
+
+    alert("Signup saved!");
+    return false;
+}
+
+function confirmReset() {
+    return confirm("Are you sure you want to reset the form?");
+}
+
+function checkEmpty(el) {
+    if (el.value.trim() === "") {
+        el.classList.add("invalid");
+    } else {
+        el.classList.remove("invalid");
+    }
+}
+</script>
+</head>
+
+<body>
+
+<form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+
+    <label>
+        Student ID
+        <input type="number" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Full Name
+        <input type="text" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Birthday
+        <input type="date" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Email Address
+        <input type="email" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Mobile Phone
+        <input type="text" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+        Grade Level
+        <select required onblur="checkEmpty(this)">
+            <option value="">𑣲 Select</option>
+            <option value="g7">Grade 7</option>
+            <option value="g8">Grade 8</option>
+            <option value="g9">Grade 9</option>
+            <option value="g10">Grade 10</option>
+            <option value="g11">Grade 11</option>
+            <option value="g12">Grade 12</option>
+        </select>
+    </label>
+
+    <label>
+        Intern / Extern
+        <input type="radio" name="role" value="intern" required> Internal
+        <input type="radio" name="role" value="extern"> External
+    </label>
+
+    <label>
+        Preferred Organization / Club
+        <select required onblur="checkEmpty(this)">
+            <option value="">𑣲 Select</option>
+            <option value="Sports">Alianti</option>
+            <option value="Literature">Ellipsis</option>
+            <option value="Movies">Celluloid</option>
+            <option value="Debate">Invictus</option>
+            <option value="Religion">Acts</option>
+        </select>
+    </label>
+
+    <label>
+        Why do you want to join
+        <textarea rows="4" required onblur="checkEmpty(this)"></textarea>
+    </label>
+
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+
+</form>
+
+</body>
+</html>
